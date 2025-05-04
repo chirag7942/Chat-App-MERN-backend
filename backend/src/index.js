@@ -24,7 +24,7 @@ const PORT = process.env.PORT;//importing PORT environment variable from .env fi
 
 
 
-const __dirname = path.resolve();
+//const __dirname = path.resolve();
 
 app.use(express.json({ limit: '10mb' })); // this middleware limit is increasing backend image size limit
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
@@ -46,6 +46,8 @@ app.use("/api/auth", authRoutes);
 
 app.use("/api/messages", messageRoutes);
 
+
+
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
@@ -53,6 +55,8 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
   });
 }
+
+
 
 //below we converted app.listen to server.listen as because we'll use now socket io server coming from socket.js.
 server.listen(PORT, () => {
