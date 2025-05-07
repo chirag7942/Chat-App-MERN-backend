@@ -1,16 +1,20 @@
 const express = require("express");
-
 const { protectRoute } = require("../middleware/auth.middleware.js");
-const { getUsersForSidebar, getMessages, sendMessage} = require("../controllers/message.controller.js");
+const {
+  getUsersForSidebar,
+  getMessages,
+  sendMessage,
+} = require("../controllers/message.controller.js");
 
 const router = express.Router();
 
+// Route to get all users for the sidebar
 router.get("/users", protectRoute, getUsersForSidebar);
-//from this route, we'll show authenticated user all the users with their online status.
 
+// Get messages with a specific user (renamed route to avoid conflict)
+router.get("/chat/:id", protectRoute, getMessages);
 
-router.get("/:id", protectRoute, getMessages); //this route will give the current logged in user all trhe messages with the user whose id we're giving in the route.
-
-router.post("/send/:id", protectRoute, sendMessage);//this route will enable the current user to send message to any particular user.
+// Send message to a specific user (renamed route to avoid conflict)
+router.post("/chat/send/:id", protectRoute, sendMessage);
 
 module.exports = router;
